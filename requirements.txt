@@ -1,0 +1,14 @@
+yfinance
+requests
+kafka-python
+websocket-client
+openai
+sqlalchemy
+schedule
+python-dotenv
+pydantic
+rich
+pandas
+numpy
+pytz
+pytest

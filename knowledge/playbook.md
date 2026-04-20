@@ -88,21 +88,24 @@ Base your confidence from the technical thesis, then adjust with flow:
 | Contradicting flow | -0.25 |
 | Dark pool print confirms direction | +0.08 |
 | Flow stacking (2+ sweeps, same direction, 60 min) | +0.06 |
+| Market tide strongly aligned (>65 or <35) | +0.04 |
 | Price just broke above resistance (breakout) | +0.05 |
 | Price bouncing off confirmed support | +0.03 |
 | Price above 21 EMA and 50 SMA | +0.02 each |
 | Price above VWAP | +0.02 |
-| Market tide strongly aligned (>65 or <35) | +0.04 |
+| Near 52-week support/resistance level | +0.02 |
 | IVR < 30 (cheap premium) | +0.02 |
+| Single signal, no stacking or dark pool | -0.03 |
 | IVR 50–70 | -0.03 |
 | VIX 20–28 | -0.02 |
-| VIX > 28 | -0.10 |
-| IVR > 75 | -0.15 |
-| Earnings < 7 days | -0.30 |
-| Bid/ask spread > $0.30 or OI < 500 | -0.20 |
-| TSLA ticker (high noise baseline) | -0.04 |
 | Price below 50 SMA with bullish thesis | -0.05 |
 | Price within 0.5% of major resistance | -0.06 |
+| Earnings 5–10 days away (not hard blocked) | -0.05 |
+| VIX > 28 | -0.10 |
+| IVR > 70 (hard block — should not reach scoring) | -0.15 |
+| Bid/ask spread > $0.30 or OI < 500 | -0.20 |
+| TSLA ticker (high noise baseline) | -0.04 |
+| Earnings < 7 days (below hard block threshold) | -0.30 |
 
 ---
 
