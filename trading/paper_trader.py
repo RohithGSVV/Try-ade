@@ -21,7 +21,7 @@ import os
 import time
 from datetime import datetime
 
-from feeds.tradier_feed import get_entry_price
+from feeds.robinhood_feed import get_entry_price
 from config.settings import (
     BASE_NOTIONAL,
     HIGH_CONF_NOTIONAL,

@@ -19,7 +19,7 @@ import logging
 import time
 from datetime import date, datetime
 
-from feeds.tradier_feed import get_entry_price
+from feeds.robinhood_feed import get_entry_price
 from trading.paper_trader import get_open_positions, get_stopout_log, update_row
 from config.settings import STOP_LOSS_PCT, TAKE_PROFIT_PCT, CLOSE_AT_DTE
 

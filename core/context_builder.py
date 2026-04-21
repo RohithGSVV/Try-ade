@@ -13,7 +13,7 @@ Two public functions:
         3. Fetch flow + dark pool (uw_feed)
         4. Score flow (flow_verifier) — skip LLM if score < threshold
         5. Fetch market tide (market_tide)
-        6. Pick suggested options contract (tradier_feed)
+        6. Pick suggested options contract (robinhood_feed)
         7. Fill analysis_prompt.md template
         8. Build system message with knowledge files prepended
 
@@ -29,7 +29,7 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 
 from feeds.historical_feed import get_technicals, get_earnings_date, get_vix
-from feeds.tradier_feed import get_expiry_dates, get_options_chain
+from feeds.robinhood_feed import get_expiry_dates, get_options_chain
 from feeds.uw_feed import get_flow_alerts, get_darkpool
 from signals.event_filters import check_all, get_session_status
 from signals.flow_verifier import verify_flow, should_call_llm

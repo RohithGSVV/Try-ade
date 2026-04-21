@@ -17,11 +17,14 @@ LLM_FALLBACK = "meta-llama/llama-3.3-70b-instruct:free"  # used if both primarie
 LLM_REQUIRE_CONSENSUS = True
 
 # Data feeds
-UW_API_KEY       = os.getenv("UW_API_KEY", "")
-UW_BASE_URL      = "https://api.unusualwhales.com"
-FINNHUB_API_KEY  = os.getenv("FINNHUB_API_KEY", "")
-TRADIER_API_KEY  = os.getenv("TRADIER_API_KEY", "")
-TRADIER_BASE_URL = "https://sandbox.tradier.com/v1"  # switch to api.tradier.com for live
+UW_API_KEY      = os.getenv("UW_API_KEY", "")
+UW_BASE_URL     = "https://api.unusualwhales.com"
+FINNHUB_API_KEY = os.getenv("FINNHUB_API_KEY", "")
+
+# Robinhood — options chain, Greeks, entry prices (uses your existing account)
+# robin_stocks stores the auth token after first login, so MFA is only asked once.
+RH_USERNAME = os.getenv("RH_USERNAME", "")
+RH_PASSWORD = os.getenv("RH_PASSWORD", "")
 
 # Alerts — Discord webhook (simpler than Telegram: no bot, no library, one URL)
 DISCORD_WEBHOOK_URL = os.getenv("DISCORD_WEBHOOK_URL", "")
@@ -80,6 +83,9 @@ HIGH_CONF_THRESHOLD = 0.82
 STOP_LOSS_PCT   = 0.50   # close at 50% loss
 TAKE_PROFIT_PCT = 1.00   # close at 100% gain
 CLOSE_AT_DTE    = 5      # force-close when 5 DTE remain
+
+# Options contract selection (context_builder picks expiry in this window)
+MIN_EXPIRY_DAYS = 14     # fallback minimum DTE when 21–45 window has nothing
 
 # Flow scoring (flow_verifier.py pre-LLM filter)
 FLOW_SCORE_SEND_THRESHOLD = 4    # score >= 4 gets sent to LLM

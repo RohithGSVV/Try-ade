@@ -36,7 +36,7 @@ SPY  QQQ  AAPL  NVDA  MSFT  META  TSLA  AMZN  GOOGL
 | OpenRouter account ×2 | Free — one for DeepSeek R1, one for GPT-OSS 120B |
 | Finnhub account | Free — real-time WebSocket prices |
 | Unusual Whales API | $50/mo — options flow, dark pool, market tide |
-| Tradier account | Free sandbox — options chains + entry prices |
+| Robinhood account | Free — options chains, Greeks, entry prices (uses your existing account) |
 | Discord webhook | Free — paste a channel webhook URL, no bot needed |
 
 ---
@@ -59,7 +59,8 @@ pip install -r requirements.txt
 | `OPENROUTER_API_KEY_GPT` | [openrouter.ai](https://openrouter.ai) → Dashboard → API Keys (Account 2, different email) |
 | `FINNHUB_API_KEY` | [finnhub.io](https://finnhub.io) → shown on dashboard after login |
 | `UW_API_KEY` | unusualwhales.com → Account → API ($50/mo required) |
-| `TRADIER_API_KEY` | [developer.tradier.com](https://developer.tradier.com) → Create App → copy Access Token |
+| `RH_USERNAME` | Your Robinhood login email |
+| `RH_PASSWORD` | Your Robinhood login password |
 | `DISCORD_WEBHOOK_URL` | Discord channel → Edit Channel → Integrations → Webhooks → New Webhook → Copy URL |
 
 ### 3. Fill in `.env`
@@ -69,7 +70,8 @@ OPENROUTER_API_KEY_DEEPSEEK=sk-or-v1-...
 OPENROUTER_API_KEY_GPT=sk-or-v1-...
 FINNHUB_API_KEY=your_20_char_key
 UW_API_KEY=your_uw_key
-TRADIER_API_KEY=your_tradier_token
+RH_USERNAME=your_robinhood_email@example.com
+RH_PASSWORD=your_robinhood_password
 DISCORD_WEBHOOK_URL=https://discord.com/api/webhooks/...
 ```
 
