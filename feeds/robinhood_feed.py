@@ -89,11 +89,11 @@ def get_options_chain(ticker: str, expiry: str) -> list[dict]:
         return []
 
     try:
-        # Fetch calls and puts in two requests (Robinhood API requires type filter)
-        calls = rh.options.find_options_for_stock(
+        # find_tradable_options is the current robin_stocks API (find_options_for_stock removed)
+        calls = rh.options.find_tradable_options(
             ticker, expirationDate=expiry, optionType="call"
         ) or []
-        puts = rh.options.find_options_for_stock(
+        puts = rh.options.find_tradable_options(
             ticker, expirationDate=expiry, optionType="put"
         ) or []
     except Exception as exc:

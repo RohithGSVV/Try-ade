@@ -51,8 +51,8 @@ def get_flow_alerts(ticker: str, limit: int = 50) -> list[dict]:
     Fetch recent unusual options flow for ticker from UW.
     Returns most recent `limit` prints, newest first.
     """
-    url = f"{UW_BASE_URL}/api/stock/{ticker}/option-trades"
-    params = {"limit": limit, "order": "desc"}
+    url = f"{UW_BASE_URL}/api/option-trades/flow"
+    params = {"ticker": ticker, "limit": limit, "order": "desc"}
 
     try:
         resp = requests.get(url, headers=_HEADERS, params=params, timeout=10)
