@@ -50,7 +50,7 @@ If any of the following conditions are true, do NOT recommend a trade. Set `"ale
 ### 8. IV rank above 70
 - If the IV rank on the suggested contract is above 70: **BLOCK**
 - Reason: overpaying for premium that has limited upside from here and high downside on IV mean reversion
-- Exception: if IV rank is elevated due to an ongoing news event (not upcoming earnings), may proceed if all other signals are very strong (score ≥ 8)
+- Exception: if IV rank is elevated due to an ongoing news event (not upcoming earnings), may proceed only if confidence would be ≥ 0.80 after applying all other modifiers from playbook.md
 
 ### 9. Flow on bid side only
 - If the trigger flow was executed on the bid (not the ask): **BLOCK**
@@ -63,22 +63,7 @@ If any of the following conditions are true, do NOT recommend a trade. Set `"ale
 
 The minimum confidence score to set `"alert": true` is **0.72**.
 
-Apply these modifiers to your confidence assessment:
-
-| Condition | Confidence modifier |
-|---|---|
-| Single sweep, no confirmation | Base only |
-| Sweep + dark pool confirm | +0.08 |
-| Stacking (2+ sweeps, same direction, 60 min) | +0.06 |
-| Market tide aligned | +0.04 |
-| Price action confirming | +0.03 |
-| IV rank < 30 (cheap options) | +0.02 |
-| Near 52-week support/resistance level | +0.02 |
-| Earnings within 10 days (not 5) | -0.05 |
-| IV rank 50–70 | -0.03 |
-| VIX between 20–30 | -0.02 |
-| TSLA ticker (high noise) | -0.04 |
-| Single signal, no confirmation | -0.03 |
+All confidence modifiers are defined in `knowledge/playbook.md` (Step 4 — Score and Decide). That is the canonical table — do not maintain a separate modifier list here.
 
 ---
 

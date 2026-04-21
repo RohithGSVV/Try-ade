@@ -111,6 +111,10 @@ Correlation group for {ticker}: {correlation_group}
 Group already occupied: {group_occupied}
   (true = hard block on correlation — cannot open another trade in this group)
 
+Recent stop-outs (24hr re-entry cooldown): {recent_stopouts}
+  (e.g. "TSLA stopped out at 11:30am — no re-entry until 11:30am tomorrow" or "none")
+  If {ticker} appears here: hard block — do not enter regardless of signal quality.
+
 ---
 
 ## YOUR TASK
@@ -202,6 +206,7 @@ def build_analysis_prompt(ticker: str, live_data: dict) -> str:
         open_positions_block=live_data["open_positions"],
         correlation_group=live_data["corr_group"],
         group_occupied=live_data["group_occupied"],
+        recent_stopouts=live_data["recent_stopouts"],
     )
 ```
 

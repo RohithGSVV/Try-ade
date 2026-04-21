@@ -1,0 +1,25 @@
+# Core bot dependencies
+schedule          # scan loop scheduler (main.py)
+python-dotenv     # .env loading (config/settings.py)
+requests          # REST calls: Massive, UW, Tradier, OpenRouter, Discord
+
+# Data feeds
+yfinance          # earnings dates + historical OHLCV (EMA/SMA/VWAP)
+websocket-client  # Finnhub real-time WebSocket (feeds/finnhub_feed.py)
+robin_stocks      # Robinhood options chain — expiry dates, Greeks, entry prices
+
+# Computation
+pandas            # DataFrame for OHLCV / rolling calculations
+numpy             # log returns, HV calculations (IVR proxy)
+
+# Testing
+pytest            # python -m pytest (unit tests, when added)
+
+# Notes:
+# - zoneinfo  : built into Python 3.11+ (no install needed)
+# - openai    : NOT used — OpenRouter calls use plain requests
+# - sqlalchemy: NOT used — paper_trades.csv is the trade log
+# - pytz      : NOT used — replaced by stdlib zoneinfo
+# - kafka     : NOT used — Finnhub uses direct WebSocket
+# - pydantic  : NOT used — plain dicts used throughout
+# - rich      : Phase 5 only — add when terminal UI is built
