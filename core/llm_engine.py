@@ -23,7 +23,6 @@ from dataclasses import dataclass, field
 from typing import Optional
 
 import requests
-from openai import OpenAI
 
 from config.settings import (
     OPENROUTER_API_KEY_DEEPSEEK,
@@ -156,29 +155,39 @@ def _call_model(model: str, api_key: str, messages: list[dict]) -> ModelResult:
     if not api_key:
         return ModelResult(model=model, error=f"No API key configured for {model}")
 
-    client = OpenAI(
-        api_key=api_key,
-        base_url=OPENROUTER_BASE_URL,
-        timeout=REQUEST_TIMEOUT,
-    )
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type":  "application/json",
+        "HTTP-Referer":  "https://github.com/RohithGSVV/Try-ade",  # OpenRouter attribution
+    }
 
     for attempt in range(2):
+        body = {
+            "model":    model,
+            "messages": messages if attempt == 0 else messages + [{
+                "role":    "user",
+                "content": "Your last response was not valid JSON. "
+                           "Return ONLY the JSON object with no other text.",
+            }],
+            "response_format": {"type": "json_object"},
+            "temperature": 0.1,
+        }
+
         try:
-            resp = client.chat.completions.create(
-                model=model,
-                messages=messages if attempt == 0 else messages + [{
-                    "role": "user",
-                    "content": "Your last response was not valid JSON. "
-                               "Return ONLY the JSON object with no other text.",
-                }],
-                response_format={"type": "json_object"},
-                temperature=0.1,
+            resp = requests.post(
+                f"{OPENROUTER_BASE_URL}/chat/completions",
+                headers=headers,
+                json=body,
+                timeout=REQUEST_TIMEOUT,
             )
+            resp.raise_for_status()
+            data = resp.json()
 
-            content = resp.choices[0].message.content or ""
+            choice  = data["choices"][0]["message"]
+            content = choice.get("content") or ""
 
-            # DeepSeek R1 exposes chain-of-thought; GPT-OSS does not
-            reasoning = getattr(resp.choices[0].message, "reasoning_content", "") or ""
+            # DeepSeek R1 exposes chain-of-thought in reasoning_content; GPT-OSS does not
+            reasoning = choice.get("reasoning_content") or ""
 
             parsed = _parse_json(content)
             if parsed is None:
