@@ -50,7 +50,11 @@ def get_flow_alerts(ticker: str, limit: int = 50) -> list[dict]:
     """
     Fetch recent unusual options flow for ticker from UW.
     Returns most recent `limit` prints, newest first.
+    Returns [] silently if UW_API_KEY is not set.
     """
+    if not UW_API_KEY:
+        return []
+
     url = f"{UW_BASE_URL}/api/option-trades/flow"
     params = {"ticker": ticker, "limit": limit, "order": "desc"}
 
@@ -105,8 +109,11 @@ def get_flow_alerts(ticker: str, limit: int = 50) -> list[dict]:
 def get_darkpool(ticker: str, hours: int = 2) -> list[dict]:
     """
     Fetch recent dark pool prints for ticker.
-    `hours` controls how far back to look (UW paginates by time server-side).
+    Returns [] silently if UW_API_KEY is not set.
     """
+    if not UW_API_KEY:
+        return []
+
     url = f"{UW_BASE_URL}/api/darkpool/{ticker}"
     params = {"limit": 20}
 
@@ -142,8 +149,11 @@ def get_darkpool(ticker: str, hours: int = 2) -> list[dict]:
 def get_market_tide() -> dict:
     """
     Fetch the current UW Market Tide score.
-    Returns {"score": 71, "direction": "bullish"} (score 0–100).
+    Returns {"score": 50, "direction": "neutral"} silently if UW_API_KEY is not set.
     """
+    if not UW_API_KEY:
+        return {"score": 50, "direction": "neutral"}
+
     url = f"{UW_BASE_URL}/api/market/market-tide"
 
     try:

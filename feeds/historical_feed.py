@@ -59,21 +59,38 @@ def get_technicals(ticker: str) -> dict:
 def get_earnings_date(ticker: str) -> tuple[Optional[str], Optional[int]]:
     """
     Return (earnings_date_str "YYYY-MM-DD", days_away) or (None, None).
-    Uses yfinance calendar which is usually accurate to within a day.
+    Handles both old yfinance (DataFrame) and new yfinance (dict) calendar format.
+    ETFs like SPY/QQQ have no earnings — returns (None, None) cleanly.
     """
     try:
         cal = yf.Ticker(ticker).calendar
-        if cal is None or cal.empty:
+        if not cal:
             return None, None
 
-        # calendar is a DataFrame with columns as dates; first column = next earnings
-        earn_date = cal.columns[0]
-        if hasattr(earn_date, "date"):
-            earn_date = earn_date.date()
-        days_away = (earn_date - date.today()).days
-        return str(earn_date), days_away
+        # New yfinance (≥0.2.x) returns a dict: {'Earnings Date': [Timestamp, ...], ...}
+        if isinstance(cal, dict):
+            dates = cal.get("Earnings Date") or []
+            if not dates:
+                return None, None
+            earn_date = dates[0]
+            if hasattr(earn_date, "date"):
+                earn_date = earn_date.date()
+            days_away = (earn_date - date.today()).days
+            return str(earn_date), days_away
+
+        # Old yfinance returned a DataFrame with dates as columns
+        if hasattr(cal, "empty"):
+            if cal.empty:
+                return None, None
+            earn_date = cal.columns[0]
+            if hasattr(earn_date, "date"):
+                earn_date = earn_date.date()
+            days_away = (earn_date - date.today()).days
+            return str(earn_date), days_away
+
+        return None, None
     except Exception as exc:
-        log.warning("Earnings date fetch failed for %s: %s", ticker, exc)
+        log.debug("Earnings date not available for %s: %s", ticker, exc)
         return None, None
 
 
