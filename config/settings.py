@@ -92,3 +92,8 @@ FLOW_SCORE_SEND_THRESHOLD = 4    # score >= 4 gets sent to LLM
 FLOW_SCORE_HIGH_PRIORITY  = 6    # score >= 6 = high priority flag
 FLOW_MAX_AGE_MINUTES      = 60   # ignore flow older than 60 min
 DARKPOOL_MATCH_WINDOW_MIN = 60   # dark pool ↔ sweep correlation window (minutes)
+
+# Set to True to bypass the flow score gate and call the LLM on every ticker
+# using technicals only. Useful for testing the full pipeline without a UW key.
+# WARNING: calls both LLMs for all 9 symbols every 10 min — watch OpenRouter rate limits.
+BYPASS_FLOW_FILTER = os.getenv("BYPASS_FLOW_FILTER", "false").lower() == "true"

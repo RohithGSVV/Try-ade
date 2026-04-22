@@ -35,7 +35,7 @@ from signals.event_filters import check_all, get_session_status
 from signals.flow_verifier import verify_flow, should_call_llm
 from signals.market_tide import get_tide, is_aligned
 from core import data_bus
-from config.settings import CORRELATION_GROUPS, MIN_EXPIRY_DAYS
+from config.settings import CORRELATION_GROUPS, MIN_EXPIRY_DAYS, BYPASS_FLOW_FILTER
 
 log = logging.getLogger(__name__)
 
@@ -112,7 +112,7 @@ def build_messages(
         market_tide_aligned=tide_aligned,
     )
 
-    if not should_call_llm(flow):
+    if not should_call_llm(flow) and not BYPASS_FLOW_FILTER:
         return {
             "messages":       [],
             "blocked":        False,
